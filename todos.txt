@@ -1,3 +1,4 @@
 [x] - create widgets for weather
 [w] - use weather api for weather data. temperature, humidity, rainy days, etc.
-[] - background blue, blue color scheme. generate chatgpt
+[] - create api to get weather by location. e.g. miami, new york, chicago, los angeles, ....
+[x] - background blue, blue color scheme. generate chatgpt
