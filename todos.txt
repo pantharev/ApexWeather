@@ -2,3 +2,7 @@
 [w] - use weather api for weather data. temperature, humidity, rainy days, etc.
 [] - create api to get weather by location. e.g. miami, new york, chicago, los angeles, ....
 [x] - background blue, blue color scheme. generate chatgpt
+[x] - add WeatherModal.
+    [w] - send low, avg, high weather day data to WeatherModal
+    [] - fix issue with weatherDay not showing in WeatherModal component.
+    [] - send daily data to daily weather modal

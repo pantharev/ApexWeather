@@ -1,7 +1,8 @@
 "use client";
 import Image from "next/image";
 import Widget from "./components/Widget";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import Modal from 'react-modal';
 
 type WeatherCondition = {
   text: string;
@@ -141,11 +142,38 @@ type ErrorType = {
   message: string;
 };
 
+const customStyles = {
+  content: {
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -50%)',
+    backgroundColor: 'white',
+    color: 'black',
+  },
+};
+
 export default function Home() {
+  let subtitle: HTMLHeadingElement | null;
   const [weather, setWeather] = useState<WeatherData | null>(null);
   const [city, setCity] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<ErrorType | null>(null);
+  const [modalIsOpen, setIsOpen] = useState(false);
+
+  useEffect(() => {
+    Modal.setAppElement('#modals');
+  }, [])
+
+  function openModal() {
+    setIsOpen(true);
+  }
+
+  function closeModal() {
+    setIsOpen(false);
+  }
 
   const fetchWeather = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -182,49 +210,11 @@ export default function Home() {
       {weather && (<div className="grid grid-cols-2 gap-5 lg:grid-cols-3 items-center">
       {weather.forecast.forecastday.map((day) => (
         <div key={day.date} className="my-5">
-          <Widget title={getWeekdayFromDate(day.date)} description={day.day.condition.text + " - " + day.day.avgtemp_f + "°F"} image={day.day.condition.icon} weather={day.day.condition.text} />
+          <Widget title={getWeekdayFromDate(day.date)} description={day.day.condition.text + " - " + day.day.avgtemp_f + "°F"} image={day.day.condition.icon} weather={day.day.condition.text} weatherDay={day.day} />
         </div>
       ))}
       </div>
       )}
-      {/* //   <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-5 gap-y-5">
-      //     <Widget
-      //     title="Monday"
-      //     description="The temperature is 75 degrees Fahrenheit. It is sunny."
-      //     image="/images/1.jpg"
-      //     weather="Sunny"
-      //   />
-      //   <Widget
-      //     title="Tuesday"
-      //     description="The temperature is 65 degrees Fahrenheit. It is rainy."
-      //     image="/images/2.jpg"
-      //     weather="Rainy"
-      //   />
-      //   <Widget
-      //     title="Wednesday"
-      //     description="The temperature is 80 degrees Fahrenheit. It is sunny."
-      //     image="/images/3.jpg"
-      //     weather="Sunny"
-      //   />
-      //   <Widget
-      //     title="Thursday"
-      //     description="The temperature is 55 degrees Fahrenheit. It is rainy."
-      //     image="/images/4.jpg"
-      //     weather="Rainy"
-      //   />
-      //   <Widget
-      //     title="Friday"
-      //     description="The temperature is 32 degrees Fahrenheit. It is snowing."
-      //     image="/images/5.jpg"
-      //     weather="Snowy"
-      //   />
-      //   <Widget
-      //     title="Saturday"
-      //     description="The temperature is 70 degrees Fahrenheit. It is cloudy."
-      //     image="/images/6.jpg"
-      //     weather="Cloudy"
-      //   />
-      // </div>   */}
     </main>
   );
 }

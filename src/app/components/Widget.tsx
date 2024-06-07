@@ -1,6 +1,7 @@
 import { TiWeatherCloudy, TiWeatherSunny, TiWeatherDownpour, TiWeatherSnow, TiWeatherStormy, TiWeatherShower   } from "react-icons/ti";
+import WeatherModal from "./WeatherModal";
 
-export default function Widget({ title, description, image, weather }: { title: string, description: string, image: string, weather: string }) {
+export default function Widget({ title, description, image, weather, weatherDay }: { title: string, description: string, image: string, weather: string, weatherDay?: any}) {
   
   let weatherIcon = null;
 
@@ -27,7 +28,7 @@ export default function Widget({ title, description, image, weather }: { title: 
       <h2 className="text-2xl font-bold mt-4">{title}</h2>
       <p className="mt-2">{description}</p>
       <div className="mt-4">{weatherIcon}</div>
-      <button className="bg-lightBlue hover:bg-blue-300 rounded-md p-5 text-royalBlue">More info</button>
+      <WeatherModal title={title} description={description} image={image} weather={weather} weatherDay={weatherDay} />
     </div>
   );
 }
