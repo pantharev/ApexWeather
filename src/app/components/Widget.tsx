@@ -28,7 +28,7 @@ export default function Widget({ title, description, image, weather, weatherDay 
       <h2 className="text-2xl font-bold mt-4">{title}</h2>
       <p className="mt-2">{description}</p>
       <div className="mt-4">{weatherIcon}</div>
-      <WeatherModal title={title} description={description} image={image} weather={weather} weatherDay={weatherDay} />
+      <WeatherModal title={title} description={description} image={image} weather={weather} weatherDay={JSON.stringify(weatherDay)} />
     </div>
   );
 }

@@ -44,7 +44,8 @@ export default function WeatherModal({ title, description, image, weather, weath
             <div>
                 <h2>{title}</h2>
                 <div>Avg {description}</div>
-                <div>{weatherDay || "No data"}</div>
+                <div>Max {JSON.parse(weatherDay || '{}')?.maxtemp_f || "No data"} °F</div>
+                <div>Min {JSON.parse(weatherDay || '{}')?.mintemp_f || "No data"} °F</div>
             </div>
             </div>
         </Modal>
