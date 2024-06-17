@@ -6,3 +6,16 @@
     [w] - send low, avg, high weather day data to WeatherModal
     [] - fix issue with weatherDay not showing in WeatherModal component.
     [] - send daily data to daily weather modal
+
+https://chatgpt.com/share/bce8700c-cf2e-4122-b8b1-27bcf091b453
+
+weather radar
+[] - unique ideas. save weather snapshots
+[] - ask ai for weather predictions further ahead?
+[] - per hour?
+\
+
+Advanced Forecasting:
+
+Microclimate Prediction: Use machine learning models to predict microclimates in specific areas, offering highly localized weather forecasts.
+Long-Range Forecasting: Implement AI models that use historical data and current trends to provide long-range weather forecasts, beyond the typical 7-10 day range.

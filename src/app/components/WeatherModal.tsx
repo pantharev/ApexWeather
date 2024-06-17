@@ -43,9 +43,15 @@ export default function WeatherModal({ title, description, image, weather, weath
             <div className="flex justify-end"><button onClick={closeModal} className="bg-slate-500 p-1">x</button></div>
             <div>
                 <h2>{title}</h2>
-                <div>Avg {description}</div>
-                <div>Max {JSON.parse(weatherDay || '{}')?.maxtemp_f || "No data"} °F</div>
-                <div>Min {JSON.parse(weatherDay || '{}')?.mintemp_f || "No data"} °F</div>
+                <div className="p-5 border-2 border-purple-400">
+                  <ul className="border-2 border-gray-400">
+                    <li className="p-1 border-2 border-gray-400">Avg {description}</li>
+                    <li className="p-1 border-2 border-gray-400">Chance of rain {JSON.parse(weatherDay || '{}')?.daily_chance_of_rain || "No data"} %</li>
+                    <li className="p-1 border-2 border-gray-400">Max {JSON.parse(weatherDay || '{}')?.maxtemp_f || "No data"} °F</li>
+                    <li className="p-1 border-2 border-gray-400">Min {JSON.parse(weatherDay || '{}')?.mintemp_f || "No data"} °F</li>
+                    <li className="p-1 border-2 border-gray-400">Humidity {JSON.parse(weatherDay || '{}')?.avghumidity || "No data"} %</li>
+                  </ul>
+                </div>
             </div>
             </div>
         </Modal>
