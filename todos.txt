@@ -13,7 +13,11 @@ weather radar
 [] - unique ideas. save weather snapshots
 [] - ask ai for weather predictions further ahead?
 [] - per hour?
-\
+[] - anthony - eng mngr suggestion: create a pop-up within 30 seconds. it will allow user to register for notifications sent to their email with the weather forecast based on their location
+[] - cron jobs. api/cron. then when user subscribes, it adds them to a database. we query the database and then they are sent the notifications
+[w] - create a post request for the subscription, send json data for the email { email : req.body.email }
+[w] - setup database within postgres neondb for subscriptions
+[w] - setup /api/cron route to send daily email weather data to subscribers
 
 Advanced Forecasting:
 
