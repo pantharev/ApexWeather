@@ -60,10 +60,13 @@ export default function SubscriptionModal() {
             <div className="flex flex-col">
             <div className="flex justify-end"><button onClick={closeModal} className="bg-slate-500 p-1">x</button></div>
             <div>
-                <form>
+                <form className="flex flex-col justify-center items-center space-y-2">
                     <h2>Subscribe to the daily newsletter:</h2>
-                    <input type="email" className="border-black border-2" onChange={handleEmailChange}></input>
-                    <button className="bg-lightBlue hover:bg-blue-300 rounded-md p-5 text-royalBlue" onClick={handleSubscriptionSubmit}>Subscribe</button>
+                    <div className="flex space-x-2">
+                        <label className="font-bold text-black">Email:</label>
+                        <input type="email" className="border-black border-2" onChange={handleEmailChange}></input>
+                    </div>
+                    <button className="bg-lightBlue hover:bg-blue-300 rounded-md p-4 text-royalBlue mx-auto" onClick={handleSubscriptionSubmit}>Subscribe</button>
                 </form>
             </div>
             </div>

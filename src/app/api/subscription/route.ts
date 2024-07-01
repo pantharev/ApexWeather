@@ -20,7 +20,7 @@ export async function POST(req: NextRequest) {
     const values = [email];
 
     const res = await client.query(text, values);
-    console.log(res.rows[0]); // Hello world!
+    console.log(res.rows[0]); // Hello world!w
     // postgresql://pantharev:MvhBG9cbiuF7@ep-falling-fog-a49f3jev.us-east-1.aws.neon.tech/weather-subs?sslmode=require
 
     // console.log("formData: ", formData);

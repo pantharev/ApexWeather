@@ -199,12 +199,13 @@ export default function Home() {
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <h1 className="text-4xl font-bold text-center text-royalBlue">Welcome to ApexWeather!</h1>
       <p className="text-royalBlue my-5">Here you can check the weather and share with your family, friends, colleagues, strangers, anyone!</p>
-      <div className="font-bold text-black">
-        <div>Subscribe here to be notified of the latest weather forecast in your area: </div>
-        {<SubscriptionModal />}
+      <div className="font-bold text-black flex flex-col items-center space-y-5">
+        <div>Subscribe here to be notified daily of the latest weather forecast in your area: </div>
+        <div>{<SubscriptionModal />}</div>
       </div>
-      <form onSubmit={fetchWeather} className="my-5">
-        <input type="text" value={city} onChange={(e) => setCity(e.target.value)} className="text-black" />
+      <form onSubmit={fetchWeather} className="my-5 flex flex-col items-center space-y-5">
+        <h1 className="font-bold text-black">Enter the name of a city below to see its forecast:</h1>
+        <input type="text" value={city} onChange={(e) => setCity(e.target.value)} className="text-black border-black border-2" />
         <button type="submit" className="bg-royalBlue text-white p-2 rounded-md">Get Weather</button>
       </form>
       {loading && <p>Loading...</p>}
