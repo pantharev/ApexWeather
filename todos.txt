@@ -17,7 +17,11 @@ weather radar
 [] - cron jobs. api/cron. then when user subscribes, it adds them to a database. we query the database and then they are sent the notifications
 [w] - create a post request for the subscription, send json data for the email { email : req.body.email }
 [w] - setup database within postgres neondb for subscriptions
+[w] - send the email to let them know they have subscribed.
 [w] - setup /api/cron route to send daily email weather data to subscribers
+
+[x] - one grid, today, then following days.
+[] - 
 
 Advanced Forecasting:
 
