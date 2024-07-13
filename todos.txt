@@ -18,7 +18,6 @@ weather radar
 [w] - create a post request for the subscription, send json data for the email { email : req.body.email }
 [w] - setup database within postgres neondb for subscriptions
 [w] - setup /api/cron route to send daily email weather data to subscribers
-[w] - setup database for neon.db prod
 
 Advanced Forecasting:
 
