@@ -1,12 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
 import pg from 'pg';
+import nodemailer from 'nodemailer';
 
 const { Pool } = pg;
 const pool = new Pool({
     connectionString: process.env.POSTGRES_CONNECTION,
 });
 
-import nodemailer from 'nodemailer';
 
 const transporter = nodemailer.createTransport({
     host: process.env.SMTP_HOST,
@@ -24,12 +24,23 @@ export async function GET(req: NextRequest, res: NextResponse) {
   console.warn('Warning level log'); // Warning level log
   console.error('Error level log'); // Error level log
 
+  const client = await pool.connect();
+
   try {
-    // Your cron job logic here
-    console.log('Cron job completed successfully');
-  } catch (error) {
-    console.error('Error in cron job:', error);
-    return NextResponse.json({ message: 'Error in cron job' }, { status: 500 });
+    const sql = "INSERT INTO Logs (LogText, Create_Timestamp) VALUES ('Cron job started', NOW())";
+
+    const res = await client.query(sql);
+    console.log(res.rows[0]); // Hello world!w
+  } catch (err) {
+    console.error(err);
+    return new NextResponse("Error creating subscription", 
+        { 
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            status: 500 
+        }
+    );
   }
 
   return NextResponse.json({ message: 'Cron job executed' }, { status: 200 });
