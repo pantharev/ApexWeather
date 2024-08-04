@@ -1,12 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import pg from 'pg';
+import nodemailer from 'nodemailer';
 
 const { Pool } = pg;
 const pool = new Pool({
     connectionString: process.env.POSTGRES_CONNECTION,
 });
-
-import nodemailer from 'nodemailer';
 
 const transporter = nodemailer.createTransport({
     host: process.env.SMTP_HOST,
@@ -17,6 +16,10 @@ const transporter = nodemailer.createTransport({
         pass: process.env.SMTP_PASSWORD,
     },
 });
+const testAccount = {
+    user: 'stone23@ethereal.email',
+    pass: 'qkS7DkmBx7DcUA1B6h'
+}
 
 export async function POST(req: NextRequest) {
     // add form data to subscriptions table
@@ -24,14 +27,22 @@ export async function POST(req: NextRequest) {
 
     const { email } = await req.json() as { email: string };
     console.log("email: ", email);
-
+    // send an email using nodemailer
+    const transporter = nodemailer.createTransport({
+        host: 'smtp.gmail.com', // todo: use google smtp server
+        port: 587,
+        secure: false,
+        auth: {
+            user: testAccount.user,
+            pass: testAccount.pass,
+        },
+    });
     const info = await transporter.sendMail({
-        from: process.env.SMTP_USER,
+        from: '"Weather App"',
         to: email,
         subject: "Subscription Confirmation",
-        text: "You have successfully subscribed to our newsletter",
+        text: "Thank you for subscribing to our weather updates!",
     });
-
     console.log("Message sent: %s", info.messageId);
 
     const client = await pool.connect();
