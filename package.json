@@ -19,11 +19,7 @@
     "sqlite3": "^5.1.7"
   },
   "devDependencies": {
-<<<<<<< HEAD
-    "@types/node": "^20",
-=======
     "@types/node": "20.14.9",
->>>>>>> 9a185accae48a0dae968baffcf576aa63a375c0d
     "@types/nodemailer": "^6.4.15",
     "@types/pg": "^8.11.6",
     "@types/react": "18.3.3",
