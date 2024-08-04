@@ -6,12 +6,33 @@ const pool = new Pool({
     connectionString: process.env.POSTGRES_CONNECTION,
 });
 
+import nodemailer from 'nodemailer';
+
+const transporter = nodemailer.createTransport({
+    host: process.env.SMTP_HOST,
+    port: parseInt(process.env.SMTP_PORT || "465"),
+    secure: true,
+    auth: {
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASSWORD,
+    },
+});
+
 export async function POST(req: NextRequest) {
     // add form data to subscriptions table
     // return subscription id
 
     const { email } = await req.json() as { email: string };
     console.log("email: ", email);
+
+    const info = await transporter.sendMail({
+        from: process.env.SMTP_USER,
+        to: email,
+        subject: "Subscription Confirmation",
+        text: "You have successfully subscribed to our newsletter",
+    });
+
+    console.log("Message sent: %s", info.messageId);
 
     const client = await pool.connect();
 

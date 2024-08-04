@@ -19,6 +19,10 @@ weather radar
 [w] - setup database within postgres neondb for subscriptions
 [w] - setup /api/cron route to send daily email weather data to subscribers
 [w] - setup database for neon.db prod
+[w] - send a message using nodemailer - to test
+    [] - err 500
+[w] - send a daily log for testing
+
 
 Advanced Forecasting:
 
