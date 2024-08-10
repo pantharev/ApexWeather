@@ -27,7 +27,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
   const client = await pool.connect();
 
   try {
-    const sql = "INSERT INTO Logs (LogText, Create_Timestamp) VALUES ('Cron job started', NOW())";
+    const sql = "INSERT INTO Logs (LogText, Create_Timestamp) VALUES ('Cron job started', NOW())"; // todo: fix.
 
     const res = await client.query(sql);
     console.log(res.rows[0]); // Hello world!w

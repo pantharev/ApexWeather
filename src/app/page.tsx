@@ -217,11 +217,11 @@ export default function Home() {
       <h2 className="font-bold text-royalBlue text-xl">{weather?.location?.name}</h2>
       {weather && (<div className="grid grid-cols-4 gap-5 lg:grid-cols-4 items-center">
       {weather && (
-            <Widget title="Today" description={`${weather.current?.temp_f}°F - ${weather.current?.condition.text}`} image={weather.current?.condition.icon} weather={weather.current?.condition.text} />
+            <Widget title="Today" description={`${weather.current?.temp_f}°F - ${weather.current?.temp_c}°C - ${weather.current?.condition.text}`} image={weather.current?.condition.icon} weather={weather.current?.condition.text} />
       )}
       {weather.forecast.forecastday.map((day) => (
         <div key={day.date} className="my-5">
-          <Widget title={getWeekdayFromDate(day.date)} description={day.day.condition.text + " - " + day.day.avgtemp_f + "°F"} image={day.day.condition.icon} weather={day.day.condition.text} weatherDay={day.day} />
+          <Widget title={getWeekdayFromDate(day.date)} description={day.day.condition.text + " - " + day.day.avgtemp_f + "°F - " + day.day.avgtemp_c + "°C"} image={day.day.condition.icon} weather={day.day.condition.text} weatherDay={day.day} />
         </div>
       ))}
       </div>

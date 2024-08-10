@@ -23,7 +23,7 @@ export default function Widget({ title, description, image, weather, weatherDay 
   }
   
   return (
-    <div className="flex flex-col items-center p-8 bg-blue-100 rounded-lg shadow-lg text-royalBlue">
+    <div className="flex flex-col items-center p-8 bg-blue-100 rounded-lg shadow-lg text-royalBlue transform transition duration-300 hover:scale-105 hover:shadow-2xl hover:bg-blue-200">
       <img src={image} alt={title} className="w-24 h-24" />
       <h2 className="text-2xl font-bold mt-4">{title}</h2>
       <p className="mt-2">{description}</p>

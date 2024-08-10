@@ -19,17 +19,14 @@ weather radar
 [w] - setup database within postgres neondb for subscriptions
 [w] - send the email to let them know they have subscribed.
 [w] - setup /api/cron route to send daily email weather data to subscribers
-<<<<<<< HEAD
-[w] - setup database for neon.db prod
-[w] - send a message using nodemailer - to test
-    [] - err 500
-[w] - send a daily log for testing
-
-=======
 
 [x] - one grid, today, then following days.
 [] - 
->>>>>>> 9a185accae48a0dae968baffcf576aa63a375c0d
+
+
+[w] - bg hover
+[w] - F to celcius - use f to celcius formula
+[] - hourly weather vs daily when clicking on more info.
 
 Advanced Forecasting:
 
