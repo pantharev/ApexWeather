@@ -26,7 +26,10 @@ weather radar
 
 [w] - bg hover
 [w] - F to celcius - use f to celcius formula
-[] - hourly weather vs daily when clicking on more info.
+[w] - hourly weather vs daily when clicking on more info.
+
+[w] - change the background according to today's weather like in the apple app - Ana suggestion
+
 
 Advanced Forecasting:
 

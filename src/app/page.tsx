@@ -166,7 +166,43 @@ export default function Home() {
 
   useEffect(() => {
     Modal.setAppElement('#modals');
-  }, [])
+    const weatherCondition = weather?.current?.condition.text;
+    const isDay = weather?.current?.is_day;
+    // change based on current weather. so when Get Weather is pressed, change the background color.
+
+
+    console.log("Weather Condition: ", weatherCondition);
+    if(weatherCondition && weatherCondition.includes("Rain") || weatherCondition?.includes("rain") || weatherCondition?.includes("Drizzle") || weatherCondition?.includes("drizzle")) {
+      changeBackground('0, 0, 0', '128, 128, 128');
+      changeForeground('255, 255, 255');
+    } else if(weatherCondition && weatherCondition.includes("Cloudy") || weatherCondition?.includes("cloudy")) {
+      changeBackground('128, 128, 128', '219, 219, 219');
+      changeForeground('0, 0, 0');
+    } else if(weatherCondition?.includes("Sunny")) {
+      changeBackground('120, 199, 255', '238, 248, 255');
+      changeForeground('0, 0, 0');
+    } else if(weatherCondition?.includes("snow") || weatherCondition?.includes("Snow")) {
+      changeBackground('246, 250, 252', '255, 255, 255');
+      changeForeground('0, 0, 0');
+    } else if(weatherCondition?.includes("Clear") || weatherCondition?.includes("clear") && isDay === 0) {
+      changeBackground('0, 0, 0', '0, 0, 0');
+      changeForeground('255, 255, 255');
+    } else if(weatherCondition?.includes("Clear") || weatherCondition?.includes("clear") && isDay === 1) {
+      changeBackground('120, 199, 255', '120, 199, 255');
+      changeForeground('255, 255, 255');
+    }
+  }, [weather])
+
+  const changeBackground = (start: string, end: string) => {
+    const root = document.documentElement;
+    root.style.setProperty('--background-start-rgb', start);
+    root.style.setProperty('--background-end-rgb', end);
+  };
+
+  const changeForeground = (color: string) => {
+    const root = document.documentElement;
+    root.style.setProperty('--foreground-rgb', color);
+  };
 
   function openModal() {
     setIsOpen(true);
