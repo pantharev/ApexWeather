@@ -4,6 +4,8 @@ import Widget from "./components/Widget";
 import { useState, useEffect } from "react";
 import Modal from 'react-modal';
 import SubscriptionModal from "./components/SubscriptionModal";
+import moment from "moment";
+import MiniWidget from "./components/MiniWidget";
 
 type WeatherCondition = {
   text: string;
@@ -170,6 +172,14 @@ export default function Home() {
     const isDay = weather?.current?.is_day;
     // change based on current weather. so when Get Weather is pressed, change the background color.
 
+    weather?.forecast.forecastday.map((day) => {
+      console.log("Day: ", day);
+      console.log("Hour");
+      console.log("Hour: ", day.hour);
+      day.hour.map((hour) => {
+        console.log("hour time: ", hour.time);
+      })
+    });
 
     console.log("Weather Condition: ", weatherCondition);
     if(weatherCondition && weatherCondition.includes("Rain") || weatherCondition?.includes("rain") || weatherCondition?.includes("Drizzle") || weatherCondition?.includes("drizzle")) {
@@ -257,9 +267,21 @@ export default function Home() {
       )}
       {weather.forecast.forecastday.map((day) => (
         <div key={day.date} className="my-5">
-          <Widget title={getWeekdayFromDate(day.date)} description={day.day.condition.text + " - " + day.day.avgtemp_f + "°F - " + day.day.avgtemp_c + "°C"} image={day.day.condition.icon} weather={day.day.condition.text} weatherDay={day.day} />
+          <Widget title={getWeekdayFromDate(day.date)} description={day.day.condition.text + " - " + day.day.avgtemp_f + "°F - " + day.day.avgtemp_c + "°C - rain " + day.day.daily_chance_of_rain + "%" + " - max wind " + day.day.maxwind_mph + "mph"} image={day.day.condition.icon} weather={day.day.condition.text} weatherDay={day.day} />
         </div>
       ))}
+      {weather && (
+        weather?.forecast.forecastday.map((day) => (
+          <div className="my-5 p-3 bg-blue-400 rounded-md">
+            <p className="text-left">{moment(day.hour[0].time).format("dddd, MMMM D")}</p>
+            {day.hour.map((hour) => (
+              <div key={hour.time_epoch} className="my-5 bg-blue-400 rounded-md">
+                <MiniWidget time={moment(hour.time).format("h:mm A")} image={hour.condition.icon} temperature={hour.temp_f + "°F - " + hour.temp_c + "°C - rain " + hour.chance_of_rain + "% - wind " + hour.wind_dir + " " + hour.wind_mph + " mph"} />
+              </div>
+            ))}
+          </div>
+        ))
+      )}
       </div>
       )}
     </main>
