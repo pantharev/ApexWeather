@@ -6,6 +6,10 @@ import Modal from 'react-modal';
 import SubscriptionModal from "./components/SubscriptionModal";
 import moment from "moment";
 import MiniWidget from "./components/MiniWidget";
+import Slider from "react-slick";
+import SimpleSlider from "./components/SimpleSlider";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 type WeatherCondition = {
   text: string;
@@ -166,6 +170,54 @@ export default function Home() {
   const [error, setError] = useState<ErrorType | null>(null);
   const [modalIsOpen, setIsOpen] = useState(false);
 
+  const settings = {
+    dots: true,
+    infinite: false,
+    speed: 500,
+    slidesToShow: 4,
+    slidesToScroll: 4,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 4,
+          slidesToScroll: 4,
+        },
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 4,
+          slidesToScroll: 4,
+        },
+      },
+    ],
+  };
+
+  const settings2 = {
+    dots: true,
+    infinite: false,
+    speed: 500,
+    slidesToShow: 3,
+    slidesToScroll: 3,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2,
+        },
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2,
+        },
+      },
+    ],
+  };
+
   useEffect(() => {
     Modal.setAppElement('#modals');
     const weatherCondition = weather?.current?.condition.text;
@@ -242,7 +294,8 @@ export default function Home() {
   }
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
+    <>
+    <main className="flex min-h-screen flex-col items-center justify-between p-2">
       <h1 className="text-4xl font-bold text-center text-royalBlue">Welcome to ApexWeather!</h1>
       <p className="text-royalBlue my-5">Here you can check the weather and share with your family, friends, colleagues, strangers, anyone!</p>
       <div className="font-bold text-black flex flex-col items-center space-y-5">
@@ -261,29 +314,47 @@ export default function Home() {
       )} */}
             
       <h2 className="font-bold text-royalBlue text-xl">{weather?.location?.name}</h2>
-      {weather && (<div className="grid grid-cols-4 gap-5 lg:grid-cols-4 items-center">
+      
       {weather && (
             <Widget title="Today" description={`${weather.current?.temp_f}°F - ${weather.current?.temp_c}°C - ${weather.current?.condition.text}`} image={weather.current?.condition.icon} weather={weather.current?.condition.text} />
       )}
-      {weather.forecast.forecastday.map((day) => (
+      {weather && (<div className="grid grid-cols-1 gap-5 lg:grid-cols-3 items-center">
+
+      {weather && <h1 className="font-bold text-xl">Weekly forecast</h1>}
+      <Slider {...settings2}>
+        {weather && (
+          weather?.forecast?.forecastday?.map((day) => (
+            <div key={day.date} className="my-5">
+              <Widget title={getWeekdayFromDate(day.date)} description={day.day.condition.text + " - " + day.day.avgtemp_f + "°F - " + day.day.avgtemp_c + "°C - rain " + day.day.daily_chance_of_rain + "%" + " - max wind " + day.day.maxwind_mph + "mph"} image={day.day.condition.icon} weather={day.day.condition.text} weatherDay={day.day} />
+            </div>
+          ))
+        )}
+      </Slider>
+      {/* {weather.forecast.forecastday.map((day) => (
         <div key={day.date} className="my-5">
           <Widget title={getWeekdayFromDate(day.date)} description={day.day.condition.text + " - " + day.day.avgtemp_f + "°F - " + day.day.avgtemp_c + "°C - rain " + day.day.daily_chance_of_rain + "%" + " - max wind " + day.day.maxwind_mph + "mph"} image={day.day.condition.icon} weather={day.day.condition.text} weatherDay={day.day} />
         </div>
-      ))}
+      ))} */}
+
+      {weather && <h1 className="font-bold text-xl">Hourly forecast</h1>}
       {weather && (
         weather?.forecast.forecastday.map((day) => (
           <div className="my-5 p-3 bg-blue-400 rounded-md">
-            <p className="text-left">{moment(day.hour[0].time).format("dddd, MMMM D")}</p>
+            <p className="text-left text-white font-bold">{moment(day.hour[0].time).format("dddd, MMMM D")}</p>
+            <Slider {...settings}>
             {day.hour.map((hour) => (
               <div key={hour.time_epoch} className="my-5 bg-blue-400 rounded-md">
-                <MiniWidget time={moment(hour.time).format("h:mm A")} image={hour.condition.icon} temperature={hour.temp_f + "°F - " + hour.temp_c + "°C - rain " + hour.chance_of_rain + "% - wind " + hour.wind_dir + " " + hour.wind_mph + " mph"} />
+                {/* <MiniWidget time={moment(hour.time).format("h:mm A")} image={hour.condition.icon} temperature={hour.temp_f + "°F - " + hour.temp_c + "°C - rain " + hour.chance_of_rain + "% - wind " + hour.wind_dir + " " + hour.wind_mph + " mph"} /> */}
+                <MiniWidget time={moment(hour.time).format("h A")} image={hour.condition.icon} temperature={Math.round(hour.temp_f) + "°"} />
               </div>
             ))}
+            </Slider>
           </div>
         ))
       )}
       </div>
       )}
     </main>
+    </>
   );
 }
