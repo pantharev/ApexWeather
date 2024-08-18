@@ -345,7 +345,7 @@ export default function Home() {
             {day.hour.map((hour) => (
               <div key={hour.time_epoch} className="my-5 bg-blue-400 rounded-md">
                 {/* <MiniWidget time={moment(hour.time).format("h:mm A")} image={hour.condition.icon} temperature={hour.temp_f + "°F - " + hour.temp_c + "°C - rain " + hour.chance_of_rain + "% - wind " + hour.wind_dir + " " + hour.wind_mph + " mph"} /> */}
-                <MiniWidget time={moment(hour.time).format("h A")} image={hour.condition.icon} temperature={Math.round(hour.temp_f) + "°"} />
+                <MiniWidget time={moment(hour.time).format("h A")} image={hour.condition.icon} temperature={Math.round(hour.temp_f) + "°"} rain={hour.chance_of_rain + "%"} />
               </div>
             ))}
             </Slider>
