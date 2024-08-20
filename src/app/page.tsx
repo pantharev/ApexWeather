@@ -10,6 +10,7 @@ import Slider from "react-slick";
 import SimpleSlider from "./components/SimpleSlider";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import ToggleSystem from "./components/ToggleSystem";
 
 type WeatherCondition = {
   text: string;
@@ -169,6 +170,7 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<ErrorType | null>(null);
   const [modalIsOpen, setIsOpen] = useState(false);
+  const [isCelcius, setIsCelcius] = useState(false);
 
   const settings = {
     dots: true,
@@ -293,9 +295,15 @@ export default function Home() {
     return date.toLocaleDateString("en-US", { weekday: "long" });
   }
 
+  function handleToggle(isOn: boolean) {
+    console.log("Toggle: ", isOn);
+    setIsCelcius(isOn);
+  }
+
   return (
     <>
     <main className="flex min-h-screen flex-col items-center justify-between p-2">
+      <ToggleSystem onChange={handleToggle} />
       <h1 className="text-4xl font-bold text-center text-royalBlue">Welcome to ApexWeather!</h1>
       <p className="text-royalBlue my-5">Here you can check the weather and share with your family, friends, colleagues, strangers, anyone!</p>
       <div className="font-bold text-black flex flex-col items-center space-y-5">
@@ -316,7 +324,7 @@ export default function Home() {
       <h2 className="font-bold text-royalBlue text-xl">{weather?.location?.name}</h2>
       
       {weather && (
-            <Widget title="Today" description={`${weather.current?.temp_f}°F - ${weather.current?.temp_c}°C - ${weather.current?.condition.text}`} image={weather.current?.condition.icon} weather={weather.current?.condition.text} />
+            <Widget title="Today" description={`${isCelcius ? weather.current?.temp_c + "°C" : weather.current?.temp_f + "°F"}` + " - " + weather.current?.condition.text} image={weather.current?.condition.icon} weather={weather.current?.condition.text} />
       )}
       {weather && (<div className="grid grid-cols-1 gap-5 lg:grid-cols-3 items-center">
 
@@ -325,7 +333,7 @@ export default function Home() {
         {weather && (
           weather?.forecast?.forecastday?.map((day) => (
             <div key={day.date} className="my-5">
-              <Widget title={getWeekdayFromDate(day.date)} description={day.day.condition.text + " - " + day.day.avgtemp_f + "°F - " + day.day.avgtemp_c + "°C - rain " + day.day.daily_chance_of_rain + "%" + " - max wind " + day.day.maxwind_mph + "mph"} image={day.day.condition.icon} weather={day.day.condition.text} weatherDay={day.day} />
+              <Widget title={getWeekdayFromDate(day.date)} description={day.day.condition.text + " - " + `${isCelcius ? day.day.avgtemp_c + "°C" : day.day.avgtemp_f + "°F"}` + " - " + day.day.daily_chance_of_rain + "%" + " - max wind " + day.day.maxwind_mph + "mph"} image={day.day.condition.icon} weather={day.day.condition.text} weatherDay={day.day} />
             </div>
           ))
         )}
