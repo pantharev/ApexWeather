@@ -171,6 +171,7 @@ export default function Home() {
   const [error, setError] = useState<ErrorType | null>(null);
   const [modalIsOpen, setIsOpen] = useState(false);
   const [isCelcius, setIsCelcius] = useState(false);
+  const [backgroundImage, setBackgroundImage] = useState("");
 
   const settings = {
     dots: true,
@@ -238,21 +239,26 @@ export default function Home() {
     console.log("Weather Condition: ", weatherCondition);
     if(weatherCondition && weatherCondition.includes("Rain") || weatherCondition?.includes("rain") || weatherCondition?.includes("Drizzle") || weatherCondition?.includes("drizzle")) {
       changeBackground('0, 0, 0', '128, 128, 128');
+      changeBackgroundImage('/img/Raindrops.jpg');
       changeForeground('255, 255, 255');
     } else if(weatherCondition && weatherCondition.includes("Cloudy") || weatherCondition?.includes("cloudy")) {
       changeBackground('128, 128, 128', '219, 219, 219');
+      changeBackgroundImage('/img/Cloudy.jpg');
       changeForeground('0, 0, 0');
     } else if(weatherCondition?.includes("Sunny")) {
       changeBackground('120, 199, 255', '238, 248, 255');
+      changeBackgroundImage('/img/Sunny.jpg');
       changeForeground('0, 0, 0');
     } else if(weatherCondition?.includes("snow") || weatherCondition?.includes("Snow")) {
       changeBackground('246, 250, 252', '255, 255, 255');
       changeForeground('0, 0, 0');
     } else if(weatherCondition?.includes("Clear") || weatherCondition?.includes("clear") && isDay === 0) {
       changeBackground('0, 0, 0', '0, 0, 0');
+      changeBackgroundImage('/img/ClearSkyNight.jpg');
       changeForeground('255, 255, 255');
     } else if(weatherCondition?.includes("Clear") || weatherCondition?.includes("clear") && isDay === 1) {
       changeBackground('120, 199, 255', '120, 199, 255');
+      changeBackgroundImage('/img/ClearSky.jpg');
       changeForeground('255, 255, 255');
     }
   }, [weather])
@@ -262,6 +268,10 @@ export default function Home() {
     root.style.setProperty('--background-start-rgb', start);
     root.style.setProperty('--background-end-rgb', end);
   };
+
+  const changeBackgroundImage = (image: string) => {
+    setBackgroundImage(image);
+  }
 
   const changeForeground = (color: string) => {
     const root = document.documentElement;
@@ -302,7 +312,7 @@ export default function Home() {
 
   return (
     <>
-    <main className="flex min-h-screen flex-col items-center justify-between p-2">
+    <main className="flex min-h-screen flex-col items-center justify-between p-2" style={{ backgroundImage: `url(${backgroundImage})` }}>
       <ToggleSystem onChange={handleToggle} />
       <h1 className="text-4xl font-bold text-center text-royalBlue">Welcome to ApexWeather!</h1>
       <p className="text-royalBlue my-5">Here you can check the weather and share with your family, friends, colleagues, strangers, anyone!</p>
@@ -310,7 +320,7 @@ export default function Home() {
         <div>Subscribe here to be notified daily of the latest weather forecast in your area: </div>
         <div>{<SubscriptionModal />}</div>
       </div>
-      <form onSubmit={fetchWeather} className="my-5 flex flex-col items-center space-y-5">
+      <form onSubmit={fetchWeather} className="my-5 flex flex-col items-center space-y-5 mb-10">
         <h1 className="font-bold text-black">Enter the name of a city below to see its forecast:</h1>
         <input type="text" value={city} onChange={(e) => setCity(e.target.value)} className="text-black border-black border-2" />
         <button type="submit" className="bg-royalBlue text-white p-2 rounded-md">Get Weather</button>
@@ -328,11 +338,11 @@ export default function Home() {
       )}
       {weather && (<div className="grid grid-cols-1 gap-5 lg:grid-cols-3 items-center">
 
-      {weather && <h1 className="font-bold text-xl">Weekly forecast</h1>}
+      {weather && <h1 className="font-bold text-xl mt-10">Weekly forecast</h1>}
       <Slider {...settings2}>
         {weather && (
           weather?.forecast?.forecastday?.map((day) => (
-            <div key={day.date} className="my-5">
+            <div key={day.date} className="my-5 px-1">
               <Widget title={getWeekdayFromDate(day.date)} description={day.day.condition.text + " - " + `${isCelcius ? day.day.avgtemp_c + "°C" : day.day.avgtemp_f + "°F"}` + " - " + day.day.daily_chance_of_rain + "%" + " - max wind " + day.day.maxwind_mph + "mph"} image={day.day.condition.icon} weather={day.day.condition.text} weatherDay={day.day} />
             </div>
           ))
