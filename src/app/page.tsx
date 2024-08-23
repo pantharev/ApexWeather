@@ -339,15 +339,17 @@ export default function Home() {
       {weather && (<div className="grid grid-cols-1 gap-5 lg:grid-cols-3 items-center">
 
       {weather && <h1 className="font-bold text-xl mt-10">Weekly forecast</h1>}
-      <Slider {...settings2}>
+      {/* <Slider {...settings2}> */}
+        <div className="bg-blue-300 rounded-md">
         {weather && (
           weather?.forecast?.forecastday?.map((day) => (
             <div key={day.date} className="my-5 px-1">
-              <Widget title={getWeekdayFromDate(day.date)} description={day.day.condition.text + " - " + `${isCelcius ? day.day.avgtemp_c + "°C" : day.day.avgtemp_f + "°F"}` + " - " + day.day.daily_chance_of_rain + "%" + " - max wind " + day.day.maxwind_mph + "mph"} image={day.day.condition.icon} weather={day.day.condition.text} weatherDay={day.day} />
+                <Widget title={getWeekdayFromDate(day.date)} description={`${isCelcius ? day.day.avgtemp_c + "°C" : day.day.avgtemp_f + "°F"}` + " - " + day.day.daily_chance_of_rain + "%"} image={day.day.condition.icon} weather={day.day.condition.text} weatherDay={day.day} />
             </div>
           ))
         )}
-      </Slider>
+        </div>
+      {/* </Slider> */}
       {/* {weather.forecast.forecastday.map((day) => (
         <div key={day.date} className="my-5">
           <Widget title={getWeekdayFromDate(day.date)} description={day.day.condition.text + " - " + day.day.avgtemp_f + "°F - " + day.day.avgtemp_c + "°C - rain " + day.day.daily_chance_of_rain + "%" + " - max wind " + day.day.maxwind_mph + "mph"} image={day.day.condition.icon} weather={day.day.condition.text} weatherDay={day.day} />

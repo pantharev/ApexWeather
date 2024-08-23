@@ -23,9 +23,9 @@ export default function Widget({ title, description, image, weather, weatherDay 
   }
   
   return (
-    <div className="flex flex-col items-center p-8 bg-blue-100 rounded-[100px] shadow-lg text-royalBlue transform transition duration-300 hover:scale-105 hover:shadow-2xl hover:bg-blue-200">
-      <img src={image} alt={title} className="w-24 h-24" />
+    <div className="flex items-center p-1 bg-blue-100 rounded-[100px] shadow-lg text-royalBlue transform transition duration-300 hover:scale-105 hover:shadow-2xl hover:bg-blue-200">
       <h2 className="text-2xl font-bold mt-4">{title}</h2>
+      <img src={image} alt={title} className="w-12 h-12" />
       <p className="mt-2">{description}</p>
       <div className="mt-4">{weatherIcon}</div>
       <WeatherModal title={title} description={description} image={image} weather={weather} weatherDay={JSON.stringify(weatherDay)} />
