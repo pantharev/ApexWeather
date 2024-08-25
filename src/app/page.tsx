@@ -11,6 +11,7 @@ import SimpleSlider from "./components/SimpleSlider";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import ToggleSystem from "./components/ToggleSystem";
+import FeedbackForm from "./components/FeedbackForm";
 
 type WeatherCondition = {
   text: string;
@@ -358,7 +359,7 @@ export default function Home() {
 
       {weather && <h1 className="font-bold text-xl">Hourly forecast</h1>}
       {weather && (
-        weather?.forecast.forecastday.map((day) => (
+        weather?.forecast?.forecastday.map((day) => (
           <div className="my-5 p-3 bg-blue-400 rounded-md">
             <p className="text-left text-white font-bold">{moment(day.hour[0].time).format("dddd, MMMM D")}</p>
             <Slider {...settings}>
@@ -374,6 +375,7 @@ export default function Home() {
       )}
       </div>
       )}
+      <FeedbackForm />
     </main>
     </>
   );
